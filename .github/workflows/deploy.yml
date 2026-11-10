@@ -30,10 +30,13 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
+      # 顺序有讲究：setup-node 的 pnpm 缓存需要先有 pnpm，
+      # 因此先装 pnpm 再配置 Node。
+      # 不指定 version：pnpm/action-setup 会读取 package.json 里的
+      # packageManager 字段（pnpm@10.20.0）。两处都写会报
+      # "Multiple versions of pnpm specified"。
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
