@@ -2,7 +2,19 @@
 
 梁衡的个人主页。用 [Astro](https://astro.build/) 搭的静态站，部署在 GitHub Pages 上。
 
+**线上地址：https://lheng7.github.io**
+
 内容全部走 Markdown，**加一个新项目 = 新建一个 `.md` 文件**，不用碰任何页面代码。
+
+> ⚠️ **还没替换的占位内容**
+> `src/content/projects/` 下的两个项目（`pid-温度控制器.md`、`校园导航网页.md`）
+> 是我生成的示例，其中参数、结果、反思都是编写的，不是真实经历。
+> 「关于」页的经历时间线同样是占位。
+> 站点已公开可访问，请尽快替换成真实内容，或先删掉这两个文件：
+>
+> ```bash
+> rm ~/project_lh/personal-site/src/content/projects/*.md
+> ```
 
 ---
 
@@ -198,13 +210,18 @@ workflow 不写 version。
 
 ## 已做的事，和还没做的
 
-已验证可跑：`pnpm build` 通过，6 个页面正常生成；本地 `pnpm preview` 下所有路由返回 200；`BASE_PATH` 子路径模式下的链接、CSS 资源、canonical、sitemap 都正确加了前缀。
+已验证可跑：`pnpm build` 通过，6 个页面正常生成；本地 `pnpm preview` 下所有路由返回 200；
+`BASE_PATH` 子路径模式下的链接、CSS 资源、canonical、sitemap 都正确加了前缀。
+
+已上线并实测：https://lheng7.github.io 及其 `/projects/`、`/about/`、`/favicon.png`、
+`/robots.txt`、`/rss.xml`、`/sitemap-index.xml` 全部返回 200，CSS 正常加载（8485 字节），
+页面内无 `localhost` 残留链接，RSS 内链接指向正式域名。
 
 **还没做**：
 - 站内搜索（项目多了以后可能需要，可以用 Pagefind）
 - 暗色/亮色手动切换开关
-- 自定义域名 + HTTPS 证书（Pages 自带 HTTPS，但要先买域名并在 DNS 加 CNAME）
-- 示例项目内容是占位文字，需要换成你自己的真实项目
+- 自定义域名（Pages 自带 HTTPS，`https_enforced` 已是 true；换域名要先买域名并加 DNS 记录）
+- **示例项目与「关于」时间线是占位内容，需要换成真实经历**
 
 ---
 
