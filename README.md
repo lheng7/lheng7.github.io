@@ -134,44 +134,51 @@ Astro 会自动压缩并生成响应式尺寸。
 
 ## 部署到 GitHub Pages
 
-### 第一次
+**已经部署好了**，不用再做第一次的配置：
 
-1. 在 GitHub 建一个仓库。**仓库名决定网址**：
-   - 命名 `<你的用户名>.github.io` → 网址是 `https://<用户名>.github.io/`
-   - 其他名字（如 `personal-site`）→ 网址是 `https://<用户名>.github.io/personal-site/`
-
-   两种都能跑，workflow 里的 `configure-pages` 会自动判断该用哪个基路径，你不用改配置。
-
-2. 把代码推上去：
-
-   ```bash
-   cd ~/project_lh/personal-site
-   git init
-   git add .
-   git commit -m "初始化个人站点"
-   git branch -M main
-   git remote add origin git@github.com:<用户名>/<仓库名>.git
-   git push -u origin main
-   ```
-
-3. 到仓库 **Settings → Pages**，把 **Source** 设成 **GitHub Actions**。
-
-4. 推送后 workflow 自动跑，一两分钟后站点就上线了。在仓库的 **Actions** 标签页能看进度。
+| 项 | 值 |
+|---|---|
+| 仓库 | https://github.com/lheng7/lheng7.github.io |
+| 线上地址 | https://lheng7.github.io |
+| Pages 源 | GitHub Actions（已通过 API 设好，别改成 "Deploy from a branch"） |
+| 触发器 | 推送到 `main` 自动部署，也可在 Actions 页手动触发 |
 
 ### 以后更新
 
+改完内容，三条命令：
+
 ```bash
-git add .
-git commit -m "新增项目：xxx"
+cd ~/project_lh/personal-site
+git add . && git commit -m "新增项目：xxx"
 git push
 ```
 
-自动重新部署，不用做别的。
+推送后 GitHub 会自动重新构建部署，一两分钟生效。进度看
+[Actions](https://github.com/lheng7/lheng7.github.io/actions)。
+
+### 仓库命名决定网址（给以后新建别的站参考）
+
+- `<用户名>.github.io` → 网址是 `https://<用户名>.github.io/`（本站在用这个）
+- 其他名字 → 网址是 `https://<用户名>.github.io/<仓库名>/`
+
+两种都不用改配置：workflow 里的 `configure-pages` 会自动判断基路径。
 
 ### 改域名
 
-上线后把 `src/site.config.ts` 里的 `url` 改成真实地址（影响 canonical 和 RSS）。
-`SITE` 环境变量会覆盖它——workflow 里就是这么注入的，所以其实不改也能正常跑。
+`src/site.config.ts` 里的 `url` 现在是 `https://lheng7.github.io`（影响 canonical 和 RSS）。
+绑自定义域名时把它改成新域名即可；workflow 会用 `SITE` 环境变量覆盖它，所以两边一致最稳。
+
+---
+
+## 踩过的坑（CI 相关）
+
+**pnpm 版本只能声明一处。** `package.json` 里的 `packageManager: pnpm@10.20.0` 和
+workflow 里 `pnpm/action-setup` 的 `with: version` 同时存在，会直接报
+`Multiple versions of pnpm specified` 让构建失败。现在只保留 `package.json` 一处，
+workflow 不写 version。
+
+**步骤顺序有依赖。** `actions/setup-node` 的 `cache: pnpm` 需要 pnpm 已存在，
+所以 `Setup pnpm` 必须排在 `Setup Node` 前面。
 
 ---
 
