@@ -1,0 +1,73 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE, NAV, SOCIALS } from '../site.config';
+import { url } from '../utils';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+/** 判断导航项是否对应当前页面，用于高亮 */
+const currentPath = url(Astro.url.pathname).replace(/\/+$/, '') || '/';
+const isCurrent = (href: string) => {
+  const target = url(href).replace(/\/+$/, '') || '/';
+  if (target === '/') return currentPath === '/';
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+};
+
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <div class="site">
+      <header class="site-header">
+        <div class="wrap">
+          <a class="brand" href={url('/')}>{SITE.title}</a>
+          <nav class="site-nav" aria-label="主导航">
+            {
+              NAV.map((item) => (
+                <a href={url(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </header>
+
+      <main id="main">
+        <div class="wrap">
+          <slot />
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <div class="wrap">
+          <span>© {year} {SITE.author}</span>
+          {
+            SOCIALS.length > 0 && (
+              <div class="footer-links">
+                {SOCIALS.map((s) => (
+                  <a href={s.href} target="_blank" rel="noopener noreferrer">
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

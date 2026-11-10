@@ -1,0 +1,6 @@
+# pnpm 配置
+# esbuild 与 sharp 需要执行安装脚本（下载/编译原生二进制），
+# 这里显式放行，否则 Astro 构建会失败。
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

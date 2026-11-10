@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.order - a.data.order || b.data.startDate.localeCompare(a.data.startDate)
+);
+---
+
+<BaseLayout title="项目" description="梁衡做过的项目与实验记录。">
+  <header class="page-head">
+    <h1>项目</h1>
+    <p>课程设计、课外科创和自学练习。每个项目都写了背景、做法和复盘。</p>
+  </header>
+
+  {
+    projects.length > 0 ? (
+      <div class="card-grid">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty">
+        <p>还没有项目。</p>
+        <p class="small">
+          在 <code>src/content/projects/</code> 里新建一个 <code>.md</code> 文件就会出现在这里。
+        </p>
+      </div>
+    )
+  }
+</BaseLayout>

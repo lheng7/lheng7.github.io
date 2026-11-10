@@ -1,0 +1,76 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatRange, url } from '../../utils';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, summary, startDate, endDate, tags, links, cover } = project.data;
+const { Content } = await render(project);
+
+/** 按 2025 年 3 月 的格式显示起止时间 */
+const period = formatRange(startDate, endDate);
+---
+
+<BaseLayout title={title} description={summary}>
+  <nav class="breadcrumb" aria-label="面包屑">
+    <a href={url('/projects/')}>项目</a>
+    <span aria-hidden="true"> / </span>
+    <span>{title}</span>
+  </nav>
+
+  <header class="project-header">
+    <h1>{title}</h1>
+    <p class="project-summary">{summary}</p>
+
+    <ul class="meta-list">
+      <li>
+        <dt>时间</dt>
+        <dd>{period}</dd>
+      </li>
+      {
+        tags.length > 0 && (
+          <li>
+            <dt>关键词</dt>
+            <dd>{tags.join(' · ')}</dd>
+          </li>
+        )
+      }
+    </ul>
+
+    {
+      links.length > 0 && (
+        <div class="link-row">
+          {links.map((l) => (
+            <a class="btn" href={l.href} target="_blank" rel="noopener noreferrer">
+              {l.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    {cover && <img src={cover.src} alt={`${title} 封面`} width="800" style="margin-top:24px;border-radius:10px;border:1px solid var(--border)" />}
+  </header>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <hr />
+  <p class="small muted">
+    <a href={url('/projects/')}>← 返回项目列表</a>
+  </p>
+</BaseLayout>

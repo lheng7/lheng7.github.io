@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SOCIALS } from '../site.config';
+import { url } from '../utils';
+
+/**
+ * 关于页。
+ * 下面这段经历时间线是占位内容，换成你自己的即可——
+ * 每一条就是一个 <li>，改 when / what / detail 三处。
+ */
+const timeline = [
+  {
+    when: '2023 年 9 月 – 至今',
+    what: '清华大学 · 电子工程系 · 本科在读',
+    detail: '主修方向偏模拟与信号处理，也在补计算机的基础课。',
+  },
+  {
+    when: '2024 年 10 月',
+    what: '做了一个校园导航小工具',
+    detail: '第一次完整走完「写代码 → 部署 → 有人用」的流程。',
+  },
+  {
+    when: '2025 年 3 月 – 6 月',
+    what: 'PID 温度控制器课程设计',
+    detail: '从开关控制改到 PID，第一次真正体会到理论参数和实测的差距。',
+  },
+];
+
+const email = SOCIALS.find((s) => s.href.startsWith('mailto:'))?.href.replace('mailto:', '');
+---
+
+<BaseLayout title="关于" description={`关于 ${SITE.title}。`}>
+  <header class="page-head">
+    <h1>关于</h1>
+    <p>{SITE.tagline}</p>
+  </header>
+
+  <article class="prose">
+    <h2>我在做什么</h2>
+    <p>
+      我是{SITE.author}，清华大学电子工程系本科在读。目前主要在学模拟电路、数字系统和信号处理，
+      课余会做一些嵌入式和硬件的小项目。这个站点用来放这些项目的记录——包括做得顺利的部分，
+      也包括踩过的坑和事后觉得当时应该怎么做的部分。
+    </p>
+
+    <h2>怎么写项目笔记</h2>
+    <p>
+      每个项目我都会尽量写清楚四件事：为什么做、用了什么方案、结果如何、哪里做得不好。
+      最后一条最重要——只写「完成了」的总结对以后没什么帮助。
+    </p>
+
+    <h2>经历</h2>
+  </article>
+
+  <ul class="timeline">
+    {
+      timeline.map((item) => (
+        <li>
+          <span class="when">{item.when}</span>
+          <span class="what">{item.what}</span>
+          <p class="detail">{item.detail}</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <article class="prose">
+    <h2>联系</h2>
+    <p>
+      有问题或者想交流，欢迎发邮件{email && <> 到 <a href={`mailto:${email}`}>{email}</a></>}，
+      或者到 GitHub 上找我。
+    </p>
+    <p class="small muted">
+      这个站点用 Astro 搭建，托管在 GitHub Pages 上，没有用任何追踪脚本。
+    </p>
+  </article>
+
+  <p class="small muted"><a href={url('/')}>← 返回首页</a></p>
+</BaseLayout>

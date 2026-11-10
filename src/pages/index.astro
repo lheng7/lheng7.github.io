@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE, TAGS } from '../site.config';
+import { url } from '../utils';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.order - a.data.order || b.data.startDate.localeCompare(a.data.startDate)
+);
+
+const featured = projects.filter((p) => p.data.featured).slice(0, 4);
+const rest = featured.length > 0 ? projects : projects.slice(0, 6);
+const shown = featured.length > 0 ? featured : rest;
+---
+
+<BaseLayout>
+  <section class="hero">
+    <h1>{SITE.title}</h1>
+    <p class="tagline">{SITE.tagline}</p>
+    <p class="lede">{SITE.description}</p>
+    {
+      TAGS.length > 0 && (
+        <ul class="tag-row">
+          {TAGS.map((t) => (
+            <li class="tag">{t}</li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>{featured.length > 0 ? '精选项目' : '项目'}</h2>
+      <a class="more" href={url('/projects/')}>全部项目 →</a>
+    </div>
+
+    {
+      shown.length > 0 ? (
+        <div class="card-grid">
+          {shown.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <p>还没有项目。</p>
+          <p class="small">
+            在 <code>src/content/projects/</code> 里新建一个 <code>.md</code> 文件就会出现在这里。
+          </p>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

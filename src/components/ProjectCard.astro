@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatRange, url } from '../utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, summary, startDate, endDate, tags } = project.data;
+const href = url(`/projects/${project.id}/`);
+const shownTags = tags.slice(0, 3);
+---
+
+<a class="card" href={href}>
+  <h3 class="card-title">{title}</h3>
+  <p class="card-summary">{summary}</p>
+  <div class="card-meta">
+    <span>{formatRange(startDate, endDate)}</span>
+    {
+      shownTags.length > 0 && (
+        <div class="card-tags">
+          {shownTags.map((t) => (
+            <span>{t}</span>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</a>
