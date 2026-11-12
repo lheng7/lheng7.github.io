@@ -6,15 +6,10 @@
 
 内容全部走 Markdown，**加一个新项目 = 新建一个 `.md` 文件**，不用碰任何页面代码。
 
-> ⚠️ **还没替换的占位内容**
-> `src/content/projects/` 下的两个项目（`pid-温度控制器.md`、`校园导航网页.md`）
-> 是我生成的示例，其中参数、结果、反思都是编写的，不是真实经历。
-> 「关于」页的经历时间线同样是占位。
-> 站点已公开可访问，请尽快替换成真实内容，或先删掉这两个文件：
->
-> ```bash
-> rm ~/project_lh/personal-site/src/content/projects/*.md
-> ```
+> **当前状态：项目列表是空的。**
+> 之前拿来演示的两个示例项目（以及「关于」页的三条编造经历）已经删干净了，
+> 首页和 `/projects/` 显示「还没有项目」，等你放假自己填。
+> 想知道怎么加，看 [编辑指南](docs/编辑指南.md)，或者直接看下面的「加一个新项目」。
 
 ---
 
@@ -40,6 +35,8 @@ personal-site/
 ├── astro.config.mjs          # 站点配置（base 路径、sitemap、代码高亮）
 ├── pnpm-workspace.yaml       # pnpm 配置（放行 esbuild / sharp 的构建脚本）
 ├── .github/workflows/deploy.yml   # 推送到 main 自动部署
+├── docs/
+│   └── 编辑指南.md          # ★ 日常怎么改，看这个就够了
 ├── public/
 │   ├── robots.txt
 │   ├── favicon.png           # 浏览器标签图标（蓝底"梁"字）
@@ -56,6 +53,7 @@ personal-site/
     │   └── ProjectCard.astro # 项目卡片
     ├── content/
     │   └── projects/         # ★ 项目内容（Markdown）
+    │       └── .gitkeep      # 占位文件，让 git 保留这个空目录
     └── pages/
         ├── index.astro       # 首页
         ├── about.astro       # 关于页
@@ -66,7 +64,7 @@ personal-site/
             └── [slug].astro  # 项目详情（由 Markdown 自动生成）
 ```
 
-标了 ★ 的三个地方是日常要改的，其余基本不用动。
+标了 ★ 的地方是日常要改的，其余基本不用动。更细的编辑说明见 [docs/编辑指南.md](docs/编辑指南.md)。
 
 ---
 
@@ -140,7 +138,14 @@ Astro 会自动压缩并生成响应式尺寸。
 
 ### 改「关于」页的经历时间线
 
-`src/pages/about.astro` 顶部的 `timeline` 数组，每条改 `when` / `what` / `detail` 三处。
+`src/pages/about.astro` 顶部的 `timeline` 数组现在是空的，所以页面上不显示「经历」这一段。
+往数组里加 `{ when, what, detail }` 就会自动渲染出来：
+
+```js
+const timeline = [
+  { when: '2025 年 3 月 – 6 月', what: '做了个什么东西', detail: '一句话说明。' },
+];
+```
 
 ---
 
@@ -210,8 +215,9 @@ workflow 不写 version。
 
 ## 已做的事，和还没做的
 
-已验证可跑：`pnpm build` 通过，6 个页面正常生成；本地 `pnpm preview` 下所有路由返回 200；
-`BASE_PATH` 子路径模式下的链接、CSS 资源、canonical、sitemap 都正确加了前缀。
+已验证可跑：`pnpm build` 通过；有内容时生成 6 个页面，**项目清空后生成 4 个页面**
+（`/`、`/projects/`、`/about/`、`/404`，零项目的 RSS 也验证过是合法 XML）；本地 `pnpm preview`
+下所有路由返回 200；`BASE_PATH` 子路径模式下的链接、CSS 资源、canonical、sitemap 都正确加了前缀。
 
 已上线并实测：https://lheng7.github.io 及其 `/projects/`、`/about/`、`/favicon.png`、
 `/robots.txt`、`/rss.xml`、`/sitemap-index.xml` 全部返回 200，CSS 正常加载（8485 字节），
@@ -221,7 +227,7 @@ workflow 不写 version。
 - 站内搜索（项目多了以后可能需要，可以用 Pagefind）
 - 暗色/亮色手动切换开关
 - 自定义域名（Pages 自带 HTTPS，`https_enforced` 已是 true；换域名要先买域名并加 DNS 记录）
-- **示例项目与「关于」时间线是占位内容，需要换成真实经历**
+- 填充真实项目与经历——**这一步留给你自己**
 
 ---
 

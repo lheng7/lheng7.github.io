@@ -5,26 +5,14 @@ import { url } from '../utils';
 
 /**
  * 关于页。
- * 下面这段经历时间线是占位内容，换成你自己的即可——
- * 每一条就是一个 <li>，改 when / what / detail 三处。
+ * 经历时间线目前是空的，页面不会渲染这一段。
+ * 想加一条，往数组里加一个 { when, what, detail }，三段文字随便写：
+ *
+ *   { when: '2025 年 3 月 – 6 月', what: '做了个什么东西', detail: '一句话说明。' },
+ *
+ * 也可以不要这个数组，改成直接写 Markdown 段落。
  */
-const timeline = [
-  {
-    when: '2023 年 9 月 – 至今',
-    what: '清华大学 · 电子工程系 · 本科在读',
-    detail: '主修方向偏模拟与信号处理，也在补计算机的基础课。',
-  },
-  {
-    when: '2024 年 10 月',
-    what: '做了一个校园导航小工具',
-    detail: '第一次完整走完「写代码 → 部署 → 有人用」的流程。',
-  },
-  {
-    when: '2025 年 3 月 – 6 月',
-    what: 'PID 温度控制器课程设计',
-    detail: '从开关控制改到 PID，第一次真正体会到理论参数和实测的差距。',
-  },
-];
+const timeline: { when: string; what: string; detail: string }[] = [];
 
 const email = SOCIALS.find((s) => s.href.startsWith('mailto:'))?.href.replace('mailto:', '');
 ---
@@ -48,21 +36,26 @@ const email = SOCIALS.find((s) => s.href.startsWith('mailto:'))?.href.replace('m
       每个项目我都会尽量写清楚四件事：为什么做、用了什么方案、结果如何、哪里做得不好。
       最后一条最重要——只写「完成了」的总结对以后没什么帮助。
     </p>
-
-    <h2>经历</h2>
   </article>
 
-  <ul class="timeline">
-    {
-      timeline.map((item) => (
-        <li>
-          <span class="when">{item.when}</span>
-          <span class="what">{item.what}</span>
-          <p class="detail">{item.detail}</p>
-        </li>
-      ))
-    }
-  </ul>
+  {
+    timeline.length > 0 && (
+      <>
+        <article class="prose">
+          <h2>经历</h2>
+        </article>
+        <ul class="timeline">
+          {timeline.map((item) => (
+            <li>
+              <span class="when">{item.when}</span>
+              <span class="what">{item.what}</span>
+              <p class="detail">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+  }
 
   <article class="prose">
     <h2>联系</h2>
