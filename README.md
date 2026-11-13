@@ -165,7 +165,7 @@ const timeline = [
 改完内容，三条命令：
 
 ```bash
-cd ~/project_lh/personal-site
+cd ~/project_lh/mycode/personal-site
 git add . && git commit -m "新增项目：xxx"
 git push
 ```
@@ -251,10 +251,10 @@ grep -o 'href="/personal-site[^"]*"' dist/index.html | sort -u
 
 ## 怎么回退
 
-这个站点是新建目录 `~/project_lh/personal-site/`，没有改动任何现有文件。不想要了直接删整个目录：
+这个站点是新建目录 `~/project_lh/mycode/personal-site/`，没有改动任何现有文件。不想要了直接删整个目录：
 
 ```bash
-rm -rf ~/project_lh/personal-site
+rm -rf ~/project_lh/mycode/personal-site
 ```
 
 已经在 GitHub 上的话，去仓库 Settings 底部 Delete this repository。
