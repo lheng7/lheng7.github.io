@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SOCIALS, siteText } from '../site.config';
+import { SOCIALS } from '../site.config';
 import { localeUrl } from '../utils';
 import { useTranslations, type Locale } from '../i18n';
 
@@ -10,7 +10,6 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const site = siteText(locale);
 
 /**
  * 经历时间线目前是空的，页面不会渲染这一段。
@@ -28,7 +27,6 @@ const email = SOCIALS.find((s) => s.href.startsWith('mailto:'))?.href.replace('m
 >
   <header class="page-head">
     <h1>{t('about.heading')}</h1>
-    <p>{site.tagline}</p>
   </header>
 
   <article class="prose">

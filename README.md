@@ -79,11 +79,13 @@ personal-site/
 
 ```ts
 export const SITE = {
-  title: 'lheng7',
-  tagline: '清华大学 · 电子工程 · 本科在读',
-  description: '……用于 SEO 和 RSS……',
-  url: 'http://localhost:4321',   // ← 上线后改成真实域名
-  author: 'lheng7',
+  title: { en: 'lheng7', zh: 'lheng7' },
+  description: {
+    en: '……用于 SEO 和 RSS……',
+    zh: '……',
+  },
+  url: 'https://lheng7.github.io',
+  author: { en: 'lheng7', zh: 'lheng7' },
 };
 
 export const SOCIALS = [

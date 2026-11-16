@@ -15,11 +15,6 @@ export const SITE = {
     en: 'lheng7',
     zh: 'lheng7',
   },
-  /** 一句话定位，显示在主页 */
-  tagline: {
-    en: 'Tsinghua University · Electrical Engineering · Undergraduate',
-    zh: '清华大学 · 电子工程 · 本科在读',
-  },
   /** 站点描述，用于 SEO 与 RSS */
   description: {
     en: 'Personal homepage of lheng7, undergraduate in Electronic Engineering at Tsinghua University. Analog and digital circuits, embedded systems, signal processing — project write-ups and technical notes live here.',
@@ -29,11 +24,6 @@ export const SITE = {
   author: {
     en: 'lheng7',
     zh: 'lheng7',
-  },
-  /** 主页顶部的技能/兴趣标签。没有就留空数组 */
-  tags: {
-    en: ['Analog circuits', 'Embedded', 'Signal processing', 'Python', 'Verilog'],
-    zh: ['模拟电路', '嵌入式', '信号处理', 'Python', 'Verilog'],
   },
 } as const;
 
@@ -57,9 +47,7 @@ export const SOCIALS = [
 export function siteText(locale: Locale) {
   return {
     title: SITE.title[locale],
-    tagline: SITE.tagline[locale],
     description: SITE.description[locale],
     author: SITE.author[locale],
-    tags: SITE.tags[locale],
   };
 }
