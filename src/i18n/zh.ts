@@ -14,14 +14,14 @@ const zh = {
   'home.projects': '项目',
   'home.allProjects': '全部项目 →',
   'home.emptyTitle': '还没有项目。',
-  'home.emptyHint': '在 src/content/projects/ 里新建一个 .md 文件就会出现在这里。',
+  'home.emptyHint': '在 src/content/projects/zh/ 里新建一个 .md 文件就会出现在这里。',
 
   'projects.metaTitle': '项目',
   'projects.metaDescription': '梁衡做过的项目与实验记录。',
   'projects.heading': '项目',
   'projects.intro': '课程设计、课外科创和自学练习。每个项目都写了背景、做法和复盘。',
   'projects.emptyTitle': '还没有项目。',
-  'projects.emptyHint': '在 src/content/projects/ 里新建一个 .md 文件就会出现在这里。',
+  'projects.emptyHint': '在 src/content/projects/zh/ 里新建一个 .md 文件就会出现在这里。',
   'projects.viewOther': 'Read this in English →',
 
   'project.back': '← 返回项目列表',

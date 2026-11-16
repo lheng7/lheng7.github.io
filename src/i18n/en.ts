@@ -15,7 +15,7 @@ const en = {
   'home.projects': 'Projects',
   'home.allProjects': 'All projects →',
   'home.emptyTitle': 'No projects yet.',
-  'home.emptyHint': 'Add a Markdown file to src/content/projects/ and it shows up here.',
+  'home.emptyHint': 'Add a Markdown file to src/content/projects/en/ and it shows up here.',
 
   'projects.metaTitle': 'Projects',
   'projects.metaDescription': 'Projects, experiments and course work by Heng Liang.',
@@ -23,7 +23,7 @@ const en = {
   'projects.intro':
     'Course design, side projects and self-taught exercises. Each one records the background, the approach, and an honest retrospective.',
   'projects.emptyTitle': 'No projects yet.',
-  'projects.emptyHint': 'Add a Markdown file to src/content/projects/ and it appears here.',
+  'projects.emptyHint': 'Add a Markdown file to src/content/projects/en/ and it appears here.',
   'projects.viewOther': 'Read this in Chinese →',
 
   'project.back': '← Back to projects',
