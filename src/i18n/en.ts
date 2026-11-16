@@ -18,7 +18,7 @@ const en = {
   'home.emptyHint': 'Add a Markdown file to src/content/projects/en/ and it shows up here.',
 
   'projects.metaTitle': 'Projects',
-  'projects.metaDescription': 'Projects, experiments and course work by Heng Liang.',
+  'projects.metaDescription': 'Projects, experiments and course work by hengl.',
   'projects.heading': 'Projects',
   'projects.intro':
     'Course design, side projects and self-taught exercises. Each one records the background, the approach, and an honest retrospective.',
@@ -32,11 +32,11 @@ const en = {
   'project.coverAlt': 'cover image',
 
   'about.metaTitle': 'About',
-  'about.metaDescription': 'About Heng Liang, undergraduate in Electrical Engineering at Tsinghua University.',
+  'about.metaDescription': 'About hengl, undergraduate in Electrical Engineering at Tsinghua University.',
   'about.heading': 'About',
   'about.whatIDoHeading': 'What I work on',
   'about.whatIDoBody':
-    'I am Heng Liang, an undergraduate in the Department of Electronic Engineering at Tsinghua University. Most of my time goes into analog circuits, digital systems and signal processing, with embedded and hardware projects on the side. This site collects records of those projects — the parts that went smoothly, and the parts where I hit a wall and later realised what I should have done differently.',
+    'I am hengl, an undergraduate in the Department of Electronic Engineering at Tsinghua University. Most of my time goes into analog circuits, digital systems and signal processing, with embedded and hardware projects on the side. This site collects records of those projects — the parts that went smoothly, and the parts where I hit a wall and later realised what I should have done differently.',
   'about.howIWriteHeading': 'How I write these notes',
   'about.howIWriteBody':
     'For each project I try to answer four things: why I built it, what approach I took, how it turned out, and what I did badly. The last one matters most — a write-up that only says "done" is of little use to me later.',

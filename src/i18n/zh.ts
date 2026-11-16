@@ -17,7 +17,7 @@ const zh = {
   'home.emptyHint': '在 src/content/projects/zh/ 里新建一个 .md 文件就会出现在这里。',
 
   'projects.metaTitle': '项目',
-  'projects.metaDescription': '梁衡做过的项目与实验记录。',
+  'projects.metaDescription': 'hengl做过的项目与实验记录。',
   'projects.heading': '项目',
   'projects.intro': '课程设计、课外科创和自学练习。每个项目都写了背景、做法和复盘。',
   'projects.emptyTitle': '还没有项目。',
@@ -30,11 +30,11 @@ const zh = {
   'project.coverAlt': '封面',
 
   'about.metaTitle': '关于',
-  'about.metaDescription': '关于梁衡：清华大学电子工程系本科在读。',
+  'about.metaDescription': '关于hengl：清华大学电子工程系本科在读。',
   'about.heading': '关于',
   'about.whatIDoHeading': '我在做什么',
   'about.whatIDoBody':
-    '我是梁衡，清华大学电子工程系本科在读。目前主要在学模拟电路、数字系统和信号处理，课余会做一些嵌入式和硬件的小项目。这个站点用来放这些项目的记录——包括做得顺利的部分，也包括踩过的坑和事后觉得当时应该怎么做的部分。',
+    '我是hengl，清华大学电子工程系本科在读。目前主要在学模拟电路、数字系统和信号处理，课余会做一些嵌入式和硬件的小项目。这个站点用来放这些项目的记录——包括做得顺利的部分，也包括踩过的坑和事后觉得当时应该怎么做的部分。',
   'about.howIWriteHeading': '怎么写项目笔记',
   'about.howIWriteBody':
     '每个项目我都会尽量写清楚四件事：为什么做、用了什么方案、结果如何、哪里做得不好。最后一条最重要——只写「完成了」的总结对以后没什么帮助。',
