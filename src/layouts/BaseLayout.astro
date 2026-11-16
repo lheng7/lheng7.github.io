@@ -64,6 +64,38 @@ const year = new Date().getFullYear();
     <BaseHead locale={locale} title={title} description={description} alternates={headAlternates} />
   </head>
   <body>
+    <!-- 背景层：顶部柔光 + 斜向飘带曲线。纯 SVG，无图片请求 -->
+    <div class="bg-layer" aria-hidden="true">
+      <svg class="bg-ribbons" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+        <defs>
+          <linearGradient id="ribbon-fade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-opacity="0"></stop>
+            <stop offset="0.28" stop-opacity="1"></stop>
+            <stop offset="0.72" stop-opacity="1"></stop>
+            <stop offset="1" stop-opacity="0"></stop>
+          </linearGradient>
+        </defs>
+        <path
+          class="ribbon ribbon-1"
+          d="M -140 140 C 220 40, 520 320, 840 190 S 1300 20, 1620 170"
+          stroke="url(#ribbon-fade)"
+          stroke-width="20"
+        ></path>
+        <path
+          class="ribbon ribbon-2"
+          d="M -140 420 C 200 320, 560 620, 880 460 S 1320 290, 1620 430"
+          stroke="url(#ribbon-fade)"
+          stroke-width="13"
+        ></path>
+        <path
+          class="ribbon ribbon-3"
+          d="M -140 710 C 240 630, 600 870, 940 700 S 1340 530, 1620 680"
+          stroke="url(#ribbon-fade)"
+          stroke-width="8"
+        ></path>
+      </svg>
+    </div>
+
     <div class="site">
       <header class="site-header">
         <div class="wrap">

@@ -25,6 +25,9 @@
   --selection: rgba(0, 113, 227, 0.18);
   /* 首屏大标题的渐变：只作用于文字，不用于背景 */
   --hero-gradient: linear-gradient(90deg, #000000 0%, #666666 100%);
+  /* 背景：顶部柔光 + 飘带颜色 */
+  --glow: rgba(0, 113, 227, 0.1);
+  --ribbon: #0071e3;
 
   /* ---------- 字体 ---------- */
   /* macOS 上会直接命中系统的 SF Pro，就是 Apple 官网用的那套 */
@@ -99,6 +102,8 @@
     --chip-text: #a1a1a6;
     --selection: rgba(41, 151, 255, 0.28);
     --hero-gradient: linear-gradient(90deg, #ffffff 0%, #9b9b9b 100%);
+    --glow: rgba(41, 151, 255, 0.12);
+    --ribbon: #2997ff;
   }
 }
 
@@ -945,4 +950,53 @@ hr {
     opacity: 1;
     transition: none;
   }
+}
+
+/* ------------------------------------------------------------------
+   背景层：固定在最底下，内容滚过它
+   SVG 飘带用极低透明度，靠渐变两端淡出
+   ------------------------------------------------------------------ */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-image: radial-gradient(
+    70% 42% at 50% -6%,
+    var(--glow) 0%,
+    transparent 72%
+  );
+}
+
+.bg-ribbons {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-ribbons stop {
+  stop-color: var(--ribbon);
+}
+
+.ribbon {
+  stroke-linecap: round;
+}
+
+.ribbon-1 {
+  opacity: 0.07;
+}
+
+.ribbon-2 {
+  opacity: 0.08;
+}
+
+.ribbon-3 {
+  opacity: 0.09;
+}
+
+/* 内容压在背景层之上 */
+.site {
+  position: relative;
+  z-index: 1;
 }
