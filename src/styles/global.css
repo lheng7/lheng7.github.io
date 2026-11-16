@@ -23,6 +23,8 @@
   --chip-bg: #ffffff;
   --chip-text: #6e6e73;
   --selection: rgba(0, 113, 227, 0.18);
+  /* 首屏大标题的渐变：只作用于文字，不用于背景 */
+  --hero-gradient: linear-gradient(90deg, #000000 0%, #666666 100%);
 
   /* ---------- 字体 ---------- */
   /* macOS 上会直接命中系统的 SF Pro，就是 Apple 官网用的那套 */
@@ -42,6 +44,7 @@
   --text-3xl: 30px;
   --text-4xl: 36px;
   --text-5xl: 48px;
+  --text-6xl: 60px;
 
   /* ---------- 间距刻度 ---------- */
   --space-75: 8px;
@@ -93,6 +96,7 @@
     --chip-bg: #272727;
     --chip-text: #a1a1a6;
     --selection: rgba(41, 151, 255, 0.28);
+    --hero-gradient: linear-gradient(90deg, #ffffff 0%, #9b9b9b 100%);
   }
 }
 
@@ -314,9 +318,16 @@ hr {
 }
 
 .hero h1 {
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: var(--text-5xl);
+  line-height: 1.03;
+  letter-spacing: -0.025em;
   margin-bottom: var(--space-200);
+}
+
+@media (min-width: 768px) {
+  .hero h1 {
+    font-size: var(--text-6xl);
+  }
 }
 
 .hero .tagline {
@@ -724,16 +735,28 @@ hr {
 /* ---------- 空状态 ---------- */
 
 .empty {
-  padding: var(--space-800) var(--space-300);
-  text-align: center;
+  padding: var(--space-500) 0 var(--space-200);
+  text-align: left;
   color: var(--text-soft);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-xl);
-  background: var(--bg-soft);
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  border-radius: 0;
+  background: transparent;
+}
+
+.empty p {
+  margin-bottom: var(--space-75);
+}
+
+.empty p:first-child {
+  color: var(--text);
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
 }
 
 .empty p:last-child {
   margin-bottom: 0;
+  color: var(--text-faint);
 }
 
 /* ---------- 辅助类 ---------- */
@@ -832,5 +855,84 @@ hr {
   }
   .site-nav {
     gap: var(--space-200);
+  }
+}
+
+/* ------------------------------------------------------------------
+   首屏大标题：渐变文字（浅色 黑→灰，深色 白→灰）
+   只作用于文字，绝不用于背景
+   ------------------------------------------------------------------ */
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .hero h1 {
+    background-image: var(--hero-gradient);
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ------------------------------------------------------------------
+   滚动渐显：区块进视口时上浮淡入，只播放一次
+   .reveal 由脚本在运行时添加，所以没有 JS 时内容始终可见
+   ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--space-400));
+  transition:
+    opacity 700ms var(--ease),
+    transform 700ms var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   大字段落（tagline reveal）：滚到触发线时逐词点亮
+   初始不透明度压在 28%，点亮后回到 100%
+   ------------------------------------------------------------------ */
+.statement-section {
+  padding-block: var(--space-800) var(--space-900);
+}
+
+.statement {
+  max-width: var(--measure);
+  margin: 0;
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .statement {
+    font-size: var(--text-5xl);
+  }
+}
+
+.statement-word {
+  opacity: 0.28;
+  transition: opacity 600ms var(--ease);
+}
+
+.statement-word.is-lit {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statement-word {
+    opacity: 1;
+    transition: none;
   }
 }

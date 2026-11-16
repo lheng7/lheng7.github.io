@@ -12,6 +12,7 @@ const zh = {
 
   'home.featured': '精选项目',
   'home.projects': '项目',
+  'home.statement': '如果不能创造它，我就没有真正理解它。',
   'home.allProjects': '全部项目 →',
   'home.emptyTitle': '还没有项目。',
   'home.emptyHint': '在 src/content/projects/zh/ 里新建一个 .md 文件就会出现在这里。',

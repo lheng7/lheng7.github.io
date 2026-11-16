@@ -15,6 +15,15 @@ const t = useTranslations(locale);
 const site = siteText(locale);
 
 const projects = await getProjects(locale);
+
+/** 大字段落逐词点亮：英文按词拆并用空格连接，中文按字拆、不插空格 */
+const statement = t('home.statement');
+const escapeHtml = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const statementWords = locale === 'zh' ? Array.from(statement) : statement.split(/\s+/);
+const statementHtml = statementWords
+  .map((word) => `<span class="statement-word">${escapeHtml(word)}</span>`)
+  .join(locale === 'zh' ? '' : ' ');
 const featured = projects.filter((p) => p.data.featured).slice(0, 4);
 const shown = featured.length > 0 ? featured : projects.slice(0, 6);
 ---
@@ -45,5 +54,9 @@ const shown = featured.length > 0 ? featured : projects.slice(0, 6);
         </div>
       )
     }
+  </section>
+
+  <section class="statement-section">
+    <p class="statement" set:html={statementHtml} />
   </section>
 </BaseLayout>
