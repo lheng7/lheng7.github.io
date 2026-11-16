@@ -1,27 +1,31 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-import { SITE } from '../site.config';
+import { siteText } from '../site.config';
+import { getProjects, projectSlug } from '../lib/projects';
+import { localePath, url } from '../utils';
 
 /**
- * RSS 订阅。地址是 /rss.xml。
+ * 英文 RSS，地址 /rss.xml。
  * 加了新项目之后会自动出现在里面，不用手动维护。
  */
 export async function GET(context: APIContext) {
-  const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) =>
+  const locale = 'en' as const;
+  const site = siteText(locale);
+
+  const projects = (await getProjects(locale)).sort((a, b) =>
     b.data.startDate.localeCompare(a.data.startDate)
   );
 
   return rss({
-    title: SITE.title,
-    description: SITE.description,
-    site: context.site ?? SITE.url,
+    title: site.title,
+    description: site.description,
+    site: context.site ?? 'https://lheng7.github.io',
     items: projects.map((project) => ({
       title: project.data.title,
       description: project.data.summary,
-      link: `/projects/${project.id}/`,
+      link: url(localePath(locale, `/projects/${projectSlug(project.id)}/`)),
       pubDate: new Date(`${project.data.endDate ?? project.data.startDate}-01T00:00:00Z`),
     })),
-    customData: `<language>zh-CN</language>`,
+    customData: `<language>en</language>`,
   });
 }

@@ -1,0 +1,104 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { Alternate } from '../components/BaseHead.astro';
+import { formatRange, localeUrl } from '../utils';
+import { HTML_LANG, useTranslations, type Locale } from '../i18n';
+import { hasTranslation, projectSlug, type Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = useTranslations(locale);
+const { title, summary, startDate, endDate, tags, links, cover } = project.data;
+const { Content } = await render(project);
+
+const slug = projectSlug(project.id);
+const period = formatRange(startDate, endDate, locale);
+
+/** 另一种语言有没有这个项目；没有就把切换器指向那边的项目列表 */
+const other: Locale = locale === 'en' ? 'zh' : 'en';
+const otherExists = await hasTranslation(slug, other);
+const selfPath = `/projects/${slug}/`;
+
+const switchHrefs: Partial<Record<Locale, string>> = {
+  [locale]: localeUrl(locale, selfPath),
+  [other]: localeUrl(other, otherExists ? selfPath : '/projects/'),
+};
+
+const origin = Astro.site ?? Astro.url.origin;
+const alternates: Alternate[] = [
+  { hreflang: HTML_LANG[locale], href: new URL(switchHrefs[locale]!, origin).href },
+  ...(otherExists
+    ? [{ hreflang: HTML_LANG[other], href: new URL(switchHrefs[other]!, origin).href }]
+    : []),
+  // 默认语言版本不一定存在，缺了就从当前语言兜底
+  {
+    hreflang: 'x-default',
+    href: new URL(switchHrefs.en ?? switchHrefs[locale]!, origin).href,
+  },
+];
+---
+
+<BaseLayout locale={locale} title={title} description={summary} alternates={alternates} switchHrefs={switchHrefs}>
+  <nav class="breadcrumb" aria-label={t('nav.projects')}>
+    <a href={localeUrl(locale, '/projects/')}>{t('nav.projects')}</a>
+    <span aria-hidden="true"> / </span>
+    <span>{title}</span>
+  </nav>
+
+  <header class="project-header">
+    <h1>{title}</h1>
+    <p class="project-summary">{summary}</p>
+
+    <ul class="meta-list">
+      <li>
+        <dt>{t('project.time')}</dt>
+        <dd>{period}</dd>
+      </li>
+      {
+        tags.length > 0 && (
+          <li>
+            <dt>{t('project.tags')}</dt>
+            <dd>{tags.join(' · ')}</dd>
+          </li>
+        )
+      }
+    </ul>
+
+    {
+      links.length > 0 && (
+        <div class="link-row">
+          {links.map((l) => (
+            <a class="btn" href={l.href} target="_blank" rel="noopener noreferrer">
+              {l.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      cover && (
+        <img
+          src={cover.src}
+          alt={`${title} ${t('project.coverAlt')}`}
+          width="800"
+          style="margin-top:24px;border-radius:var(--radius-lg)"
+        />
+      )
+    }
+  </header>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <hr />
+  <p class="small muted">
+    <a href={localeUrl(locale, '/projects/')}>{t('project.back')}</a>
+  </p>
+</BaseLayout>

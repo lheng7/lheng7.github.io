@@ -1,48 +1,106 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import { SITE, NAV, SOCIALS } from '../site.config';
-import { url } from '../utils';
+import type { Alternate } from '../components/BaseHead.astro';
+import { NAV, SOCIALS, siteText } from '../site.config';
+import { alternateLocaleUrl, localePath, localeUrl } from '../utils';
+import { HTML_LANG, LOCALE_LABEL, LOCALES, useTranslations, type Locale } from '../i18n';
 import '../styles/global.css';
 
 interface Props {
+  locale: Locale;
   title?: string;
   description?: string;
+  /** 覆盖默认的 hreflang 列表（项目详情页只链有翻译的版本） */
+  alternates?: Alternate[];
+  /** 覆盖语言切换器的目标地址 */
+  switchHrefs?: Partial<Record<Locale, string>>;
 }
 
-const { title, description } = Astro.props;
+const { locale, title, description, alternates, switchHrefs } = Astro.props;
 
-/** 判断导航项是否对应当前页面，用于高亮 */
-const currentPath = url(Astro.url.pathname).replace(/\/+$/, '') || '/';
+const t = useTranslations(locale);
+const site = siteText(locale);
+
+/** 去掉 base，得到站内路径 */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = (base && Astro.url.pathname.startsWith(base)
+  ? Astro.url.pathname.slice(base.length)
+  : Astro.url.pathname) || '/';
+
+/** 导航高亮：把语言前缀算进去再比；首页只认完全相等，否则 /zh/ 会吃掉所有中文页 */
 const isCurrent = (href: string) => {
-  const target = url(href).replace(/\/+$/, '') || '/';
-  if (target === '/') return currentPath === '/';
-  return currentPath === target || currentPath.startsWith(`${target}/`);
+  const target = localePath(locale, href).replace(/\/+$/, '') || '/';
+  const current = currentPath.replace(/\/+$/, '') || '/';
+  if (href === '/') return current === target;
+  return current === target || current.startsWith(`${target}/`);
 };
+
+/** 语言切换器的目标地址 */
+const switchUrl = (target: Locale) =>
+  switchHrefs?.[target] ?? alternateLocaleUrl(Astro.url.pathname, target);
+
+/** 默认 hreflang：两种语言的同一页面 + x-default 指向默认语言 */
+const headAlternates: Alternate[] =
+  alternates ??
+  [
+    ...LOCALES.map((l) => ({
+      hreflang: HTML_LANG[l],
+      href: new URL(switchUrl(l), Astro.site ?? Astro.url.origin).href,
+    })),
+    {
+      hreflang: 'x-default',
+      href: new URL(switchUrl('en'), Astro.site ?? Astro.url.origin).href,
+    },
+  ];
 
 const year = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={HTML_LANG[locale]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <BaseHead title={title} description={description} />
+    <BaseHead locale={locale} title={title} description={description} alternates={headAlternates} />
   </head>
   <body>
     <div class="site">
       <header class="site-header">
         <div class="wrap">
-          <a class="brand" href={url('/')}>{SITE.title}</a>
-          <nav class="site-nav" aria-label="主导航">
-            {
-              NAV.map((item) => (
-                <a href={url(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                  {item.label}
-                </a>
-              ))
-            }
-          </nav>
+          <a class="brand" href={localeUrl(locale, '/')}>{site.title}</a>
+
+          <div class="header-end">
+            <nav class="site-nav" aria-label={t('nav.aria')}>
+              {
+                NAV.map((item) => (
+                  <a
+                    href={localeUrl(locale, item.href)}
+                    aria-current={isCurrent(item.href) ? 'page' : undefined}
+                  >
+                    {t(`nav.${item.key}`)}
+                  </a>
+                ))
+              }
+            </nav>
+
+            <div class="lang-switch" role="group" aria-label={t('lang.switchAria')}>
+              {
+                LOCALES.map((l, i) => (
+                  <>
+                    {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+                    <a
+                      href={switchUrl(l)}
+                      hreflang={HTML_LANG[l]}
+                      lang={HTML_LANG[l]}
+                      aria-current={l === locale ? 'true' : undefined}
+                    >
+                      {LOCALE_LABEL[l]}
+                    </a>
+                  </>
+                ))
+              }
+            </div>
+          </div>
         </div>
       </header>
 
@@ -54,7 +112,7 @@ const year = new Date().getFullYear();
 
       <footer class="site-footer">
         <div class="wrap">
-          <span>© {year} {SITE.author}</span>
+          <span>© {year} {site.author}</span>
           {
             SOCIALS.length > 0 && (
               <div class="footer-links">

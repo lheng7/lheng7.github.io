@@ -1,13 +1,26 @@
 ---
+/**
+ * 404 页面是 GitHub Pages 全局兜底的 /404.html，
+ * 访问任何不存在的地址都会走到这里，此时拿不到语言信息，
+ * 所以两种语言同时显示，不做 JS 判断。
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { url } from '../utils';
+import { localeUrl } from '../utils';
+import { useTranslations } from '../i18n';
+
+const en = useTranslations('en');
+const zh = useTranslations('zh');
 ---
 
-<BaseLayout title="页面不存在" description="没有找到这个页面。">
+<BaseLayout locale="en" title={en('notFound.heading')} description={en('notFound.body')}>
   <header class="page-head">
     <h1>404</h1>
-    <p>没有找到这个页面。可能是链接写错了，或者内容已经挪走了。</p>
+    <p>{en('notFound.heading')} — {en('notFound.body')}</p>
+    <p lang="zh-CN">{zh('notFound.heading')} —— {zh('notFound.body')}</p>
   </header>
 
-  <p><a class="btn" href={url('/')}>回到首页</a></p>
+  <p class="link-row">
+    <a class="btn" href={localeUrl('en', '/')}>{en('notFound.back')}</a>
+    <a class="btn" href={localeUrl('zh', '/')} lang="zh-CN">{zh('notFound.back')}</a>
+  </p>
 </BaseLayout>

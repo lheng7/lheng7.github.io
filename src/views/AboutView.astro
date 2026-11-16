@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SOCIALS, siteText } from '../site.config';
+import { localeUrl } from '../utils';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const site = siteText(locale);
+
+/**
+ * 经历时间线目前是空的，页面不会渲染这一段。
+ * 想加一条，往数组里加 { when, what, detail }。
+ */
+const timeline: { when: string; what: string; detail: string }[] = [];
+
+const email = SOCIALS.find((s) => s.href.startsWith('mailto:'))?.href.replace('mailto:', '');
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('about.metaTitle')}
+  description={t('about.metaDescription')}
+>
+  <header class="page-head">
+    <h1>{t('about.heading')}</h1>
+    <p>{site.tagline}</p>
+  </header>
+
+  <article class="prose">
+    <h2>{t('about.whatIDoHeading')}</h2>
+    <p>{t('about.whatIDoBody')}</p>
+
+    <h2>{t('about.howIWriteHeading')}</h2>
+    <p>{t('about.howIWriteBody')}</p>
+  </article>
+
+  {
+    timeline.length > 0 && (
+      <>
+        <article class="prose">
+          <h2>{t('about.experienceHeading')}</h2>
+        </article>
+        <ul class="timeline">
+          {timeline.map((item) => (
+            <li>
+              <span class="when">{item.when}</span>
+              <span class="what">{item.what}</span>
+              <p class="detail">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+
+  <article class="prose">
+    <h2>{t('about.contactHeading')}</h2>
+    <p>
+      {t('about.contactPrefix')}{email && <a href={`mailto:${email}`}>{email}</a>}{t(
+        'about.contactSuffix'
+      )}
+    </p>
+    <p class="small muted">{t('about.builtWith')}</p>
+  </article>
+
+  <p class="small muted"><a href={localeUrl(locale, '/')}>{t('about.back')}</a></p>
+</BaseLayout>

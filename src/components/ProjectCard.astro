@@ -1,14 +1,16 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { formatRange, url } from '../utils';
+import { formatRange, localeUrl } from '../utils';
+import type { Locale } from '../i18n';
+import { projectSlug, type Project } from '../lib/projects';
 
 interface Props {
-  project: CollectionEntry<'projects'>;
+  project: Project;
+  locale: Locale;
 }
 
-const { project } = Astro.props;
+const { project, locale } = Astro.props;
 const { title, summary, startDate, endDate, tags } = project.data;
-const href = url(`/projects/${project.id}/`);
+const href = localeUrl(locale, `/projects/${projectSlug(project.id)}/`);
 const shownTags = tags.slice(0, 3);
 ---
 
@@ -16,12 +18,12 @@ const shownTags = tags.slice(0, 3);
   <h3 class="card-title">{title}</h3>
   <p class="card-summary">{summary}</p>
   <div class="card-meta">
-    <span>{formatRange(startDate, endDate)}</span>
+    <span>{formatRange(startDate, endDate, locale)}</span>
     {
       shownTags.length > 0 && (
         <div class="card-tags">
-          {shownTags.map((t) => (
-            <span>{t}</span>
+          {shownTags.map((tag) => (
+            <span>{tag}</span>
           ))}
         </div>
       )

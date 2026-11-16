@@ -18,7 +18,25 @@ export default defineConfig({
   site: SITE,
   base: BASE_PATH || undefined,
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  /**
+   * 双语站点：
+   *   英文（默认）在 /、/projects/、/about/
+   *   中文在 /zh/ 下
+   * 页面文件在 src/pages/ 与 src/pages/zh/ 各一份，逻辑共用 src/views/。
+   */
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh'],
+    routing: { prefixDefaultLocale: false },
+  },
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en-US', zh: 'zh-CN' },
+      },
+    }),
+  ],
   markdown: {
     shikiConfig: {
       themes: { light: 'github-light', dark: 'github-dark' },

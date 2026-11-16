@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { localeUrl } from '../utils';
+import { useTranslations, type Locale } from '../i18n';
+import { getProjects } from '../lib/projects';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const other: Locale = locale === 'en' ? 'zh' : 'en';
+
+const projects = await getProjects(locale);
+const otherProjects = await getProjects(other);
+const showOtherLink = projects.length === 0 && otherProjects.length > 0;
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('projects.metaTitle')}
+  description={t('projects.metaDescription')}
+>
+  <header class="page-head">
+    <h1>{t('projects.heading')}</h1>
+    <p>{t('projects.intro')}</p>
+  </header>
+
+  {
+    projects.length > 0 ? (
+      <div class="card-grid">
+        {projects.map((project) => (
+          <ProjectCard project={project} locale={locale} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty">
+        <p>{t('projects.emptyTitle')}</p>
+        <p class="small">{t('projects.emptyHint')}</p>
+        {showOtherLink && (
+          <p class="small">
+            <a href={localeUrl(other, '/projects/')}>{t('projects.viewOther')}</a>
+          </p>
+        )}
+      </div>
+    )
+  }
+</BaseLayout>

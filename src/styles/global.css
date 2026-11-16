@@ -785,3 +785,52 @@ hr {
     padding: 0;
   }
 }
+
+/* ------------------------------------------------------------------
+   语言切换器（页头右侧）
+   ------------------------------------------------------------------ */
+.header-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-400);
+  min-width: 0;
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: var(--space-75);
+  font-size: var(--text-xs);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.lang-switch a {
+  color: var(--text-faint);
+  text-decoration: none;
+  padding-block: var(--space-75);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.lang-switch a:hover {
+  color: var(--text);
+}
+
+.lang-switch a[aria-current="true"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.lang-switch .sep {
+  color: var(--text-faint);
+  opacity: 0.5;
+}
+
+@media (max-width: 560px) {
+  .header-end {
+    gap: var(--space-200);
+  }
+  .site-nav {
+    gap: var(--space-200);
+  }
+}

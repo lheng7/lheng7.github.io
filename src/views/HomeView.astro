@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { siteText } from '../site.config';
+import { localeUrl } from '../utils';
+import { useTranslations, type Locale } from '../i18n';
+import { getProjects } from '../lib/projects';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const site = siteText(locale);
+
+const projects = await getProjects(locale);
+const featured = projects.filter((p) => p.data.featured).slice(0, 4);
+const shown = featured.length > 0 ? featured : projects.slice(0, 6);
+---
+
+<BaseLayout locale={locale}>
+  <section class="hero">
+    <h1>{site.title}</h1>
+    <p class="tagline">{site.tagline}</p>
+    <p class="lede">{site.description}</p>
+    {
+      site.tags.length > 0 && (
+        <ul class="tag-row">
+          {site.tags.map((tag) => (
+            <li class="tag">{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>{featured.length > 0 ? t('home.featured') : t('home.projects')}</h2>
+      <a class="more" href={localeUrl(locale, '/projects/')}>{t('home.allProjects')}</a>
+    </div>
+
+    {
+      shown.length > 0 ? (
+        <div class="card-grid">
+          {shown.map((project) => (
+            <ProjectCard project={project} locale={locale} />
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <p>{t('home.emptyTitle')}</p>
+          <p class="small">{t('home.emptyHint')}</p>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

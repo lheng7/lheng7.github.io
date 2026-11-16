@@ -2,9 +2,12 @@
 
 梁衡的个人主页。用 [Astro](https://astro.build/) 搭的静态站，部署在 GitHub Pages 上。
 
-**线上地址：https://lheng7.github.io**
+**线上地址：https://lheng7.github.io**（英文，默认） ｜ **中文版：https://lheng7.github.io/zh/**
 
 内容全部走 Markdown，**加一个新项目 = 新建一个 `.md` 文件**，不用碰任何页面代码。
+
+**双语**：英文在根路径，中文在 `/zh/` 下，页头右上角可切换。项目放在
+`src/content/projects/en/` 和 `zh/` 两个目录，同名文件即为一对翻译。
 
 > **当前状态：项目列表是空的。**
 > 之前拿来演示的两个示例项目（以及「关于」页的三条编造经历）已经删干净了，
@@ -93,7 +96,7 @@ export const SOCIALS = [
 
 ### 加一个项目
 
-在 `src/content/projects/` 下新建一个 `.md`：
+在 `src/content/projects/en/`（英文）或 `zh/`（中文）下新建一个 `.md`：
 
 ```markdown
 ---
