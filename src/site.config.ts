@@ -12,8 +12,8 @@ export const SITE = {
   url: 'https://lheng7.github.io',
   /** 站点标题，显示在浏览器标签和页头 */
   title: {
-    en: 'hengl',
-    zh: 'hengl',
+    en: 'lheng7',
+    zh: 'lheng7',
   },
   /** 一句话定位，显示在主页 */
   tagline: {
@@ -22,13 +22,13 @@ export const SITE = {
   },
   /** 站点描述，用于 SEO 与 RSS */
   description: {
-    en: 'Personal homepage of hengl, undergraduate in Electronic Engineering at Tsinghua University. Analog and digital circuits, embedded systems, signal processing — project write-ups and technical notes live here.',
-    zh: 'hengl的个人主页。清华大学电子工程系本科在读，关注模拟/数字电路、嵌入式系统与信号处理。这里放我的项目、实验记录和技术笔记。',
+    en: 'Personal homepage of lheng7, undergraduate in Electronic Engineering at Tsinghua University. Analog and digital circuits, embedded systems, signal processing — project write-ups and technical notes live here.',
+    zh: 'lheng7的个人主页。清华大学电子工程系本科在读，关注模拟/数字电路、嵌入式系统与信号处理。这里放我的项目、实验记录和技术笔记。',
   },
   /** 页脚版权署名 */
   author: {
-    en: 'hengl',
-    zh: 'hengl',
+    en: 'lheng7',
+    zh: 'lheng7',
   },
   /** 主页顶部的技能/兴趣标签。没有就留空数组 */
   tags: {

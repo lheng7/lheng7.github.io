@@ -1,6 +1,6 @@
 # 个人作品集站点
 
-hengl的个人主页。用 [Astro](https://astro.build/) 搭的静态站，部署在 GitHub Pages 上。
+lheng7的个人主页。用 [Astro](https://astro.build/) 搭的静态站，部署在 GitHub Pages 上。
 
 **线上地址：https://lheng7.github.io**（英文，默认） ｜ **中文版：https://lheng7.github.io/zh/**
 
@@ -79,11 +79,11 @@ personal-site/
 
 ```ts
 export const SITE = {
-  title: 'hengl',
+  title: 'lheng7',
   tagline: '清华大学 · 电子工程 · 本科在读',
   description: '……用于 SEO 和 RSS……',
   url: 'http://localhost:4321',   // ← 上线后改成真实域名
-  author: 'hengl',
+  author: 'lheng7',
 };
 
 export const SOCIALS = [
