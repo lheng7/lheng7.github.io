@@ -14,6 +14,7 @@ const en = {
   'home.featured': 'Selected work',
   'home.projects': 'Projects',
   'home.statement': 'If I cannot create it, I do not understand it.',
+  'home.statementCredit': '— Richard Feynman',
   'home.allProjects': 'All projects →',
   'home.emptyTitle': 'No projects yet.',
   'home.emptyHint': 'Add a Markdown file to src/content/projects/en/ and it shows up here.',

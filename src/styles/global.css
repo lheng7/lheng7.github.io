@@ -45,6 +45,8 @@
   --text-4xl: 36px;
   --text-5xl: 48px;
   --text-6xl: 60px;
+  --text-7xl: 72px;
+  --text-8xl: 96px;
 
   /* ---------- 间距刻度 ---------- */
   --space-75: 8px;
@@ -902,28 +904,36 @@ hr {
    初始不透明度压在 28%，点亮后回到 100%
    ------------------------------------------------------------------ */
 .statement-section {
-  padding-block: var(--space-800) var(--space-900);
+  padding-block: 0 var(--space-700);
 }
 
 .statement {
-  max-width: var(--measure);
+  max-width: none;
   margin: 0;
-  font-size: var(--text-4xl);
+  /* 手机档 56px 是折中值：60px 会多折一行，48px 又太小 */
+  font-size: 56px;
   font-weight: 600;
-  line-height: 1.22;
+  line-height: 1.06;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
 @media (min-width: 768px) {
   .statement {
-    font-size: var(--text-5xl);
+    font-size: var(--text-8xl);
   }
+}
+
+.statement-credit {
+  margin: var(--space-300) 0 0;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--text-faint);
 }
 
 .statement-word {
   opacity: 0.28;
-  transition: opacity 600ms var(--ease);
+  transition: opacity 1200ms var(--ease);
 }
 
 .statement-word.is-lit {

@@ -29,6 +29,11 @@ const shown = featured.length > 0 ? featured : projects.slice(0, 6);
 ---
 
 <BaseLayout locale={locale}>
+  <section class="statement-section">
+    <p class="statement" set:html={statementHtml} />
+    <p class="statement-credit">{t('home.statementCredit')}</p>
+  </section>
+
   <section class="hero">
     <h1>{site.title}</h1>
     <p class="lede">{site.description}</p>
@@ -56,7 +61,4 @@ const shown = featured.length > 0 ? featured : projects.slice(0, 6);
     }
   </section>
 
-  <section class="statement-section">
-    <p class="statement" set:html={statementHtml} />
-  </section>
 </BaseLayout>

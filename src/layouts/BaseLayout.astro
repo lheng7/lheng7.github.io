@@ -160,8 +160,8 @@ const year = new Date().getFullYear();
       const statementSection = document.querySelector('.statement-section');
 
       if (!prefersReduced && statementSection && words.length > 0) {
-        // 词少时慢一点、词多时快一点，总时长封顶 400ms
-        const step = Math.min(70, 400 / words.length);
+        // 词少时慢一点、词多时快一点，总时长封顶 800ms
+        const step = Math.min(140, 800 / words.length);
 
         const observer = new IntersectionObserver(
           (entries) => {
